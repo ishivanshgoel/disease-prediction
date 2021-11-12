@@ -6,10 +6,10 @@ from sklearn.svm import SVC
 import pickle
 from flask import Flask, jsonify, request
 
-df = pd.read_csv('./dataset.csv')
-df1 = pd.read_csv('./Symptom-severity.csv')
-description = pd.read_csv('./symptom_Description.csv')
-precaution = pd.read_csv('./symptom_precaution.csv')
+df = pd.read_csv('./datasets/dataset.csv')
+df1 = pd.read_csv('./datasets/Symptom-severity.csv')
+description = pd.read_csv('./datasets/symptom_Description.csv')
+precaution = pd.read_csv('./datasets/symptom_precaution.csv')
 
 df.isna().sum()
 df.isnull().sum()
@@ -56,7 +56,7 @@ labels = df['Disease'].values
 
 # pickle.dump(model, open('model.sav', 'wb'))
 
-model = pickle.load(open('model.sav', 'rb'))
+model = pickle.load(open('./model/model.sav', 'rb'))
 
 # preds = model.predict(x_test)
 # print('Preds', preds)
