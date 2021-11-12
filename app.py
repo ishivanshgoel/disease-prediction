@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 import pickle
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 df = pd.read_csv('./datasets/dataset.csv')
 df1 = pd.read_csv('./datasets/Symptom-severity.csv')
@@ -62,7 +63,7 @@ model = pickle.load(open('./model/model.sav', 'rb'))
 # print('Preds', preds)
 
 app = Flask(__name__)
-
+CORS(app)
 
 # print('Precaution ', precaution)
 
@@ -85,15 +86,10 @@ def SVM(psymptoms, loc):
     return list(pred2)
 
 
-@app.route('/')
+@app.route('/', methods = ['POST'])
 def index():
     symptoms = request.json['symptoms']
     location = request.json['location']
-
-    if len(symptoms)<5:
-        return jsonify(
-            error = "minimum 5 symptoms are required"
-        ), 400
 
 
     res = SVM(symptoms, location)
